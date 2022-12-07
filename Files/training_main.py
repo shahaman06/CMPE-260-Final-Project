@@ -14,38 +14,24 @@ from utils import import_train_configuration, set_sumo, set_train_path
 from constants import *
 
 config = import_train_configuration(config_file='training_settings.ini')
-sumo_cmd = set_sumo(config['gui'], config['sumocfg_file_name'], config['max_steps'])
-path = set_train_path(config['models_path_name'])
+sumo_cmd = set_sumo(TRAIN_GUI, S_CONF_FILE, MAX_STEPS)
+path = set_train_path(MDL_PATH)
 
 Model = TrainModel()
 
-Memory = Memory(
-    config['memory_size_max'], 
-    config['memory_size_min']
-)
-
-TrafficGen = TrafficGenerator(
-    config['max_steps'], 
-    config['n_cars_generated']
-)
-
-Visualization = Visualization(
-    path, 
-    dpi=96
-)
+Memory = Memory()
     
 Simulation = Simulation(
     Model,
     Memory,
-    TrafficGen,
     sumo_cmd,
-    config['gamma'],
-    config['max_steps'],
-    config['green_duration'],
-    config['yellow_duration'],
-    config['num_states'],
-    config['num_actions'],
-    config['training_epochs']
+    0.75,
+    MAX_STEPS,
+    G_DUR_SEC,
+    Y_DUR_SEC,
+    N_STATES,
+    N_ACTIONS,
+    TRAIN_EPOCHS
 )
 
 episode = 0
@@ -65,7 +51,3 @@ print("----- Session info saved at:", path)
 Model.save_model(path)
 
 copyfile(src='training_settings.ini', dst=os.path.join(path, 'training_settings.ini'))
-
-Visualization.save_data_and_plot(data=Simulation.reward_store, filename='reward', xlabel='Episode', ylabel='Cumulative negative reward')
-Visualization.save_data_and_plot(data=Simulation.cumulative_wait_store, filename='delay', xlabel='Episode', ylabel='Cumulative delay (s)')
-Visualization.save_data_and_plot(data=Simulation.avg_queue_length_store, filename='queue', xlabel='Episode', ylabel='Average queue length (vehicles)')

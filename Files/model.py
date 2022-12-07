@@ -14,8 +14,7 @@ from constants import *
 
 
 class TrainModel:
-    def __init__(self, width, batch_size, learning_rate, output_dim):
-        # N_STATES = input_dim
+    def __init__(self):
         self.input_dim = N_STATES
         self.output_dim = N_ACTIONS
         self.batch_size = TRAIN_BATCH_SIZE
@@ -30,8 +29,6 @@ class TrainModel:
         model = keras.Model(inputs=inputs, outputs=outputs, name='my_model')
         model.compile(loss=losses.mean_squared_error, optimizer=Adam(lr=self._learning_rate))
         self._model = model
-        
-    
 
     def predict_one(self, state):
         """

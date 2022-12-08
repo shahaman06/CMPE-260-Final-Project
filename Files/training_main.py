@@ -9,7 +9,7 @@ from training_simulation import Simulation
 from memory import Memory
 from model import TrainModel
 from visualization import Visualization
-from utils import import_train_configuration, set_sumo, set_train_path
+from utils import set_sumo, set_train_path
 from constants import *
 
 sumo_cmd = set_sumo(TRAIN_GUI, S_CONF_FILE, MAX_STEPS)

@@ -27,7 +27,7 @@ class TrainModel:
         outputs = layers.Dense(N_ACTIONS, activation='linear')(x)
 
         model = keras.Model(inputs=inputs, outputs=outputs, name='my_model')
-        model.compile(loss=losses.mean_squared_error, optimizer=Adam(lr=self._learning_rate))
+        model.compile(loss=losses.mean_squared_error, optimizer=Adam(lr=TRAIN_LR))
         self._model = model
 
     def predict_one(self, state):

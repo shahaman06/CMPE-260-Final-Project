@@ -18,10 +18,10 @@ PHASE_EWL_YELLOW = 7
 
 
 class Simulation:
-    def __init__(self, Model, Memory):
+    def __init__(self, Model, Memory, sumo_cmd, gamma, max_steps, green_duration, yellow_duration, num_states, num_actions, training_epochs):
         self._Model = Model
         self._Memory = Memory
-        self._gamma = GAMMA
+        self._gamma = gamma
         self._step = 0
         self._sumo_cmd = sumo_cmd
         self._max_steps = max_steps
@@ -371,4 +371,3 @@ class Simulation:
     @property
     def avg_queue_length_store(self):
         return self._avg_queue_length_store
-
